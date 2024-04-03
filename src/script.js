@@ -6,12 +6,12 @@ const weatherDetails = document.querySelector('.weather-details');
 search.addEventListener('click', () => {
 
     const APIKey = 'f658d43aebaf69430bbd11ab71b88cbf';
-    const city = document.querySelector('.search-box input').ariaValueMax;
+    const city = document.querySelector('.search-box input').value;
 
-    if (city = '')
+    if (city == '')
         return;
 
-    fetch('https://pro.openweathermap.org/data/2.5/forecast/climate?q=${city}&units=metric&appid=${APIkey}').then(response => response.json()).then(json => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=Metric&appid=${APIKey}`).then(response => response.json()).then(json => {
 
         const image = document.querySelector('.weather-box img');
         const temperature = document.querySelector('.weather-box .temperature');
@@ -26,10 +26,6 @@ search.addEventListener('click', () => {
 
             case 'Rain':
                 image.src = 'images/rain.png';
-                break;
-
-            case 'Clear':
-                image.src = 'images/clear.png';
                 break;
 
             case 'Snow':
@@ -49,10 +45,10 @@ search.addEventListener('click', () => {
 
         }
 
-        // temperature.innerHTML = ${parseInt(json.main.temp)}<span>°C</span>;
-        // temperature.innerHTML = ${json.weather[0].description};
-        // temperature.innerHTML = ${};
-        // temperature.innerHTML = ${};
+        temperature.innerHTML = `${parseInt(json.main.temp)}<span>°C<span>`;
+        description.innerHTML = `${json.weather[0].description}`;
+        humidity.innerHTML = `${json.main.humidity}%`;
+        wind.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
 
     });
 
